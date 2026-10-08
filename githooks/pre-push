@@ -1,0 +1,23 @@
+#!/bin/sh
+# Global pre-push: block any push that creates, updates or deletes main/master on the remote.
+# Git sends one line per ref on stdin: <local ref> <local sha> <remote ref> <remote sha>
+input=$(cat)
+check_refs() {
+  while read -r lref lsha rref rsha; do
+    case "$rref" in
+      refs/heads/main|refs/heads/master)
+        echo "BLOCKED by git hook: push to ${rref#refs/heads/} is not allowed. Push your work branch instead." >&2
+        return 1 ;;
+    esac
+  done <<HOOKINPUT
+$input
+HOOKINPUT
+  return 0
+}
+check_refs || exit 1
+# Run the repository's own pre-push hook if one exists (core.hooksPath hides it from Git).
+local_hook="$(git rev-parse --git-common-dir)/hooks/pre-push"
+if [ -f "$local_hook" ]; then
+  if [ -n "$input" ]; then printf '%s\n' "$input"; fi | "$local_hook" "$@" || { echo "BLOCKED by git hook: repository pre-push hook failed: $local_hook" >&2; exit 1; }
+fi
+exit 0
