@@ -29,6 +29,7 @@
 - Goal-driven: turn each task into a verifiable goal.
   - Bug fix = write a reproducing test first, then make it pass.
   - Feature = state the verification method in the plan.
+  - Refactor = confirm tests pass before and after the change.
   - Multi-step work = plan as `step -> verify: method`.
 - Trivial tasks (typo, one-line change) can be reported in one line (files and change). Approval is still required.
 
