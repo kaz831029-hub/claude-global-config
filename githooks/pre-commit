@@ -9,7 +9,7 @@ case "$branch" in
 esac
 # Run the repository's own pre-commit hook if one exists (core.hooksPath hides it from Git).
 local_hook="$(git rev-parse --git-common-dir)/hooks/pre-commit"
-if [ -f "$local_hook" ]; then
+if [ -x "$local_hook" ]; then
   "$local_hook" "$@" || { echo "BLOCKED by git hook: repository pre-commit hook failed: $local_hook" >&2; exit 1; }
 fi
 exit 0
