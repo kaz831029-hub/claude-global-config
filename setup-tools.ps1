@@ -75,6 +75,9 @@ function Backup-Config {
 function Invoke-Step($label, [scriptblock]$Block) {
     if (-not $Apply) { Plan $label; return }
     Info "run: $label"
+    # Windows PowerShell 5.1 turns native stderr output (progress, notices) into a terminating error under 'Stop'; judge by exit code instead.
+    $ErrorActionPreference = 'Continue'
+    $global:LASTEXITCODE = 0
     & $Block
     if ($LASTEXITCODE -ne 0) { Fail "failed: $label (exit $LASTEXITCODE)" }
 }
