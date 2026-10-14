@@ -1,0 +1,16 @@
+# Secrets and local config - never commit
+.env
+.env.*
+!.env.example
+.claude/settings.local.json
+.claude.json
+.claude-tools-backup/
+.install-backup/
+credentials*
+*.pem
+*.key
+
+# Temporary files (Agent.md section 6)
+*.tmp
+*.bak
+*.log
