@@ -66,6 +66,7 @@
 - Baseline: Windows + PowerShell + VS Code
 - Python uses uv; Node.js uses npm
 - Record run instructions in README; provide `setup.ps1` if needed
+- Ouroboros is for new projects and complex features only, not simple fixes. Reticle's `init` changes a project, so it needs approval per project.
 
 ## 8. Data Collection and Analysis
 - Record sources (URL, file name, collection date/time)
