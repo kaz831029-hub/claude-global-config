@@ -17,7 +17,7 @@ HOOKINPUT
 check_refs || exit 1
 # Run the repository's own pre-push hook if one exists (core.hooksPath hides it from Git).
 local_hook="$(git rev-parse --git-common-dir)/hooks/pre-push"
-if [ -f "$local_hook" ]; then
+if [ -x "$local_hook" ]; then
   if [ -n "$input" ]; then printf '%s\n' "$input"; fi | "$local_hook" "$@" || { echo "BLOCKED by git hook: repository pre-push hook failed: $local_hook" >&2; exit 1; }
 fi
 exit 0
